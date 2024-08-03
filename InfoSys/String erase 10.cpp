@@ -44,6 +44,7 @@ index 1 and 2 and remove the character at index 1. Then S becomes
 Then S becomes "0". Hence, S after performing operations is equal to
 "0"
 */
+// 1st way
 #include<bits/stdc++.h>
 using namespace std;
 string smallestString(string s){
@@ -64,4 +65,31 @@ int main(){
     getline(cin,s);
     string ans = smallestString(s);
     cout<<ans;
+}
+//2nd way
+#include<bits/stdc++.h>
+using namespace std;
+int main() {
+    string s;
+    cin >> s;
+    stack<char> st;
+    for(int i = 0; i < s.size(); i++) {
+        if(!st.empty() && s[i] == '0') {
+            while(st.top() == '1') {
+                st.pop();
+            }
+        }
+        st.push(s[i]);
+
+    }
+    string ans = "";
+    while(!st.empty()) {
+        auto curr = st.top();
+        ans += curr;
+        st.pop();
+
+    }
+    reverse(ans.begin(), ans.end());
+    cout << ans;
+    return 0;
 }
