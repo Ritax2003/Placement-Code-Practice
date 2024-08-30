@@ -26,30 +26,36 @@ Constraints:
 0 <= s.length <= 5 * 104
 s consists of English letters, digits, symbols and spaces.
 */
-
-class Solution {
-public:
-    int lengthOfLongestSubstring(string s) {
-        if (s.size() == 0) return 0;
-        unordered_map<char, int> mp;
-        int i = 0, j = 0, ans = 0;
-        
-        while (j < s.size()) {
-            mp[s[j]]++;
-            
-            if (mp.size() == j - i + 1) {
-                ans = max(ans, j - i + 1);
-            } else if (mp.size() < j - i + 1) {
-                while (mp.size() < j - i + 1) {
-                    mp[s[i]]--;
-                    if (mp[s[i]] == 0) mp.erase(s[i]);
-                    i++;
-                }
+#include <bits/stdc++.h>
+using namespace std;
+string fn(string st){
+    if(st.size()==0) return st;
+    unordered_map<char,int>mp;
+    int i=0,j=0,ans=0;
+    int start =0;
+    while(j<st.size()){
+        mp[st[j]]++;
+        if(mp.size() == j-i+1){
+            if(j-i+1>ans){
+                ans = j-i+1;
+                start = i;
             }
-            
-            j++;
         }
-        
-        return ans;
+        else if(mp.size()<j-i+1){
+            while(mp.size()<j-i+1){
+                mp[st[i]]--;
+                if(mp[st[i]]==0) mp.erase(st[i]);
+                i++;
+            }
+        }
+        j++;
     }
-};
+    return st.substr(start,ans);
+}
+int main() {
+    string st;
+    cin>>st;
+    cout<<fn(st)<<endl;
+
+    return 0;
+}
