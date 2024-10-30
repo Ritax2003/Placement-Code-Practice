@@ -41,16 +41,16 @@ class Solution {
         while(start<=end){
             int mid = start+(end-start)/2;
             if(arr[mid]==key) return mid;
-            if(arr[start]<=arr[mid]){
-                if(arr[start]<=key and key < arr[mid]){
+            if(arr[start]<=arr[mid]){ // to check if left part is sorted 
+                if(arr[start]<=key and key < arr[mid]){ // key is in the part
                     end = mid-1;
                 }
                 else{
                     start = mid+1;
                 }
             }
-            else{
-                if(arr[end] >=key  && key > arr[mid]){
+            else{ // right part is sorted
+                if(arr[end] >=key  && key > arr[mid]){ // key is in the part
                     start = mid+1;
                 }
                 else{
