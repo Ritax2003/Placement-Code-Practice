@@ -76,6 +76,39 @@ class Solution {
     }
 };
 
+//or this:
+vector<int> maxOfSubarrays(const vector<int>& arr, int N, int K) {
+    vector<int> result;
+    int maxIdx = -1;  // Store the index of the current max element
+    int maxVal = INT_MIN;  // Store the value of the current max element
+
+    // Iterate through the array and slide the window
+    for (int i = 0; i <= N - K; ++i) {
+        // Check if the previous max is still within the current window
+        if (maxIdx < i) {
+            // If not, find the new max for the current window
+            maxVal = arr[i];
+            maxIdx = i;
+            for (int j = i + 1; j < i + K; ++j) {
+                if (arr[j] > maxVal) {
+                    maxVal = arr[j];
+                    maxIdx = j;
+                }
+            }
+        } else {
+            // If the previous max is still in the window, just compare with the new element entering the window
+            if (arr[i + K - 1] > maxVal) {
+                maxVal = arr[i + K - 1];
+                maxIdx = i + K - 1;
+            }
+        }
+
+        // Store the max value of the current window
+        result.push_back(maxVal);
+    }
+
+    return result;
+}
 //{ Driver Code Starts.
 
 int main() {
