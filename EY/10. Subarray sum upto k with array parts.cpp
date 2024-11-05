@@ -3,10 +3,11 @@
 #include <unordered_map>
 using namespace std;
 
-void printSubarraysWithSumK(const vector<int>& nums, int k) {
-    unordered_map<int, vector<int>> prefixMap;  // Map to store prefix sums and their indices
+vector<vector<int>> findSubarraysWithSumK(const vector<int>& nums, int k) {
+    unordered_map<int, vector<int>> prefixMap;  // Map to store prefix sums and their ending indices
     prefixMap[0].push_back(-1);  // Handle case where prefix sum itself is equal to k
 
+    vector<vector<int>> result;  // To store the result subarrays
     int prefixSum = 0;
 
     for (int i = 0; i < nums.size(); ++i) {
@@ -14,25 +15,35 @@ void printSubarraysWithSumK(const vector<int>& nums, int k) {
 
         // Check if (prefixSum - k) exists in the map
         if (prefixMap.find(prefixSum - k) != prefixMap.end()) {
-            // Print all subarrays ending at the current index with sum k
+            // Collect all subarrays ending at the current index with sum k
             for (int startIdx : prefixMap[prefixSum - k]) {
-                cout << "Subarray with sum " << k << ": [";
-                for (int j = startIdx + 1; j <= i; ++j) {
-                    cout << nums[j] << (j < i ? ", " : "");
-                }
-                cout << "]\n";
+                vector<int> subarray(nums.begin() + startIdx + 1, nums.begin() + i + 1);
+                result.push_back(subarray);  // Add the subarray to the result
             }
         }
 
         // Add the current prefix sum with the current index to the map
         prefixMap[prefixSum].push_back(i);
     }
+
+    return result;  // Return the result containing all found subarrays
 }
 
+// Example usage
 int main() {
-    vector<int> nums = {1, 2, 3, 4, 5};
-    int k = 5;
-    cout << "Subarrays with sum " << k << ":\n";
-    printSubarraysWithSumK(nums, k);
+    vector<int> nums = {10, 2, -2, -20, 10};
+    int k = -10;
+
+    vector<vector<int>> subarrays = findSubarraysWithSumK(nums, k);
+
+    // Print the result
+    for (const auto& subarray : subarrays) {
+        cout << "Subarray with sum " << k << ": [";
+        for (size_t j = 0; j < subarray.size(); ++j) {
+            cout << subarray[j] << (j < subarray.size() - 1 ? ", " : "");
+        }
+        cout << "]\n";
+    }
+
     return 0;
 }
