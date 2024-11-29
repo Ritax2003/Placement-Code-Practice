@@ -42,21 +42,24 @@ node* arraytobt(vector<int> v){
 }
 
 
-void printTree(node* root){
-    if(!root) return;
+vector<vector<int>> printTree(node* root){
+    vector<vector<int>>res;
+    if(root == NULL) return res;
 
     queue<node*> q;
     q.push(root);
-    while(!q.empty()){
-        node* curr = q.front();
-        q.pop();
 
-        if(curr){
-            cout<<curr->val<<" ";
-            q.push(curr->left);
-            q.push(curr->right);
+    while(!q.empty()){
+        int n = q.size();
+        vector<int>temp;
+        for(int i=0;i<n;i++){
+            node* curr = q.front();
+            q.pop();
+            temp.push_back(curr->val);
+            if(curr->left) q.push(curr->left);
+            if(curr->right) q.push(curr->right);
         }
-        
+        res.push_back(temp);
     }
 }
 int main(){
@@ -65,8 +68,15 @@ int main(){
     vector<int> arr = {1, 2, 3, -1, 4, 5, 6}; // Example array
     node *root = arraytobt(arr);
 
-    cout << "Level-order traversal of the binary tree: ";
-    printTree(root);
+    cout << "Level-order traversal of the binary tree: "<<endl;
+    vector<vector<int>>ans = printTree(root);
+
+    for(auto i:ans){
+        for(auto j:i){
+            cout<<j<<" ";
+        }
+        cout<<endl;
+    }
 
     return 0;
 }
