@@ -3,26 +3,14 @@ using namespace std;
 
 // Function to check if a number is an Armstrong number
 bool isArm(int n) {
-    int num = n;
-    int k = 0;
-    int digits = 0;
-
-    // Count the number of digits in the number
-    while (num) {
-        num /= 10;
-        digits++;
+   int num = n;
+    int k=0;
+    while(num){
+        int res = num%10;
+        k+=res*res*res;
+        num/=10;
     }
-
-    num = n;
-
-    // Calculate the sum of each digit raised to the power of 'digits'
-    while (num) {
-        int res = num % 10;
-        k += pow(res, digits);
-        num /= 10;
-    }
-
-    return k == n; // Return true if it matches the original number
+    return k == n;
 }
 
 // Function to find the Nth Armstrong number
