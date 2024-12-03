@@ -35,29 +35,5 @@
 | Focuses on how the data is stored and accessed. | Focuses on what operations can be done without revealing how they are performed. |
 | The internal state is hidden, but the external interface is provided to access or modify it. | Hides the implementation details, leaving only the relevant features visible. |
 
-## 6. **Example in Code**
 
-### Encapsulation Example in Java:
 
-```java
-public class BankAccount {
-    private double balance;  // Private data member
-
-    // Getter method for balance
-    public double getBalance() {
-        return balance;
-    }
-
-    // Setter method for balance
-    public void deposit(double amount) {
-        if(amount > 0) {
-            balance += amount;
-        }
-    }
-
-    public void withdraw(double amount) {
-        if(amount <= balance) {
-            balance -= amount;
-        }
-    }
-}
