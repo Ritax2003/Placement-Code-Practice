@@ -73,6 +73,17 @@ node* mirrorBST(node* root){
     return root;
 
 }
+node* lowestCommonAncestor(node* root, node* p, node* q) {
+    if (root == NULL) return NULL;
+
+    if (root->val > p->val && root->val > q->val)
+        return lowestCommonAncestor(root->left, p, q);
+
+    if (root->val < p->val && root->val < q->val)
+        return lowestCommonAncestor(root->right, p, q);
+
+    return root;
+}
 int main(){
     vector<int> v = {4,2,6,1,3,5,7};
     node* root = arrtobin(v);
@@ -95,5 +106,9 @@ int main(){
         }
         cout<<endl;
     }
+    node* lca = lowestCommonAncestor(root, root->left, root->right);
+    if (lca) cout << "LCA: " << lca->val << endl;
+
+    return 0;
     return 0;
 }
